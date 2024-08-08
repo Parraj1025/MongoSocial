@@ -1,0 +1,20 @@
+{
+  "name": "mongosocial",
+  "version": "1.0.0",
+  "description": "Mongo Social Database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/Parraj1025/MongoSocial"
+  },
+  "author": "Juan Parra (2024)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
+  }
+}
