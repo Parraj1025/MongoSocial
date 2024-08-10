@@ -1,11 +1,24 @@
-const mongoose = require('mongoose');
+const { Schema , model }= require('mongoose');
 
-const  userSchema  = new mongoose.Schema({
-    username: String,
-    password: String
-    }
+
+const  userSchema  = new Schema({
+    username: {type: String},
+    password: {type: String},
+    posts: [{type: Schema.Types.ObjectId, ref: 'posts'}]
+},
+{
+    toJSON:{
+        virtuals: true,
+    },
+}
 );
 
-const User = mongoose.model('User', userSchema)
+userSchema.virtual('postCount').get(function(){
+    return this.posts.length;
+})
 
-module.exports =  User 
+
+
+const User = model('user', userSchema);
+
+module.exports = User
