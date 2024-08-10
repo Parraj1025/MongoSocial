@@ -38,7 +38,9 @@ async function postUser(req,res) {
 
 async function getByUser(req,res){
     try{
-        const result = await User.findOne({username: req.params.userId})
+        const result = await User.findOne(
+            {_id: req.params.userId}
+            )
         .populate('posts','friends');
         if(result){
             res.status(200).json(result)
@@ -57,8 +59,9 @@ async function updateUser(req,res){
     try{
     const updatedUser = await User.findByIdAndUpdate(
         {_id: req.params.userId},
-        {username: req.body.username},
-        {password: req.body.password}
+        {username: req.body.username,
+        password: req.body.password},
+        {new: true}
     )
     if(updateUser){
         res.status(200).json(updatedUser)

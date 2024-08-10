@@ -30,9 +30,17 @@ async function createPost(req, res) {
             { $addToSet: { posts: post._id } },
             { new: true }
         )
+
+        if(user){
+            
+            res.status(200).json(post)
+        }
+        else{
+            res.status(404).json('no user with provided ID')
+        }
 }
     catch (err) {
-    console.log(err)
+    res.status(500).json('server error')
 }
 }
 
@@ -44,7 +52,7 @@ async function updatePost(req,res){
         {post: req.body.post}
     )
     if(updatedPost){
-        res.status(200).json(updatePost)
+        res.status(200).json(updatedPost)
     }
     else{
         res.status(404).json('unable to update post')
