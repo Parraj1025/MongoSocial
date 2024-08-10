@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../../Models/Posts')
 
 router.use(express.json())
-const  { getPosts, createPost, getByPostId, deletePost} = require('../../controllers/postController')
+const  { getPosts, createPost, updatePost, getByPostId, deletePost, upvote, downVote} = require('../../controllers/postController')
 
 //get all posts
 
@@ -14,6 +14,13 @@ router.route('/')
 router.route('/:postId')
 .get(getByPostId)
 .delete(deletePost)
+.put(updatePost)
+
+router.route('/upvote/:postId')
+.put(upvote)
+
+router.route('/downvote/:postId')
+.put(downVote)
 
 
 

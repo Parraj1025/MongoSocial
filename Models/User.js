@@ -18,6 +18,11 @@ userSchema.virtual('postCount').get(function(){
     return this.posts.length;
 })
 
+userSchema.virtual('friendCount').get(function(){
+    return this.friends.length
+})
+
+
 
 
 const User = model('user', userSchema);
