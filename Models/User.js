@@ -4,7 +4,8 @@ const { Schema , model }= require('mongoose');
 const  userSchema  = new Schema({
     username: {type: String},
     password: {type: String},
-    posts: [{type: Schema.Types.ObjectId, ref: 'posts'}]
+    posts: [{type: Schema.Types.ObjectId, ref: 'posts'}],
+    friends: [{type: Schema.Types.ObjectId, ref: 'users'}]
 },
 {
     toJSON:{

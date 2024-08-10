@@ -5,7 +5,7 @@ const { User } = require('../../Models')
 
 router.use(express.json())
 
-const { getUser , postUser, getByUser, deleteByUser }= require('../../controllers/userController')
+const { getUser , postUser, getByUser, deleteByUser, addFriends }= require('../../controllers/userController')
 
 router.route('/')
 .get(getUser)
@@ -15,5 +15,7 @@ router.route('/:username')
 .get(getByUser)
 .delete(deleteByUser)
 
+router.route('/friends/:userId')
+.put(addFriends)
 
  module.exports = router

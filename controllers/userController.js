@@ -3,6 +3,7 @@ const { User } = require('../Models')
 async function getUser(req,res) {
     try {
         const result = await User.find({})
+        .populate('posts','friends');
         res.status(200).json(result)
     }
     catch (err) {
@@ -30,7 +31,7 @@ async function postUser(req,res) {
 async function getByUser(req,res){
     try{
         const result = await User.findOne({username: req.params.username})
-        .populate('posts');
+        .populate('posts','friends');
         if(result){
             res.status(200).json(result)
         }
@@ -61,5 +62,35 @@ async function deleteByUser(req,res) {
     }
 }
 
+async function addFriends(req,res){
+    try{
+        const newFriend = await User.findById(req.params.userId)
 
-module.exports = {getUser, postUser, getByUser, deleteByUser}
+        const user = await User.findById(req.body.userId)
+
+        const friendAdded = await User.findOneAndUpdate(
+            {_id: user._id},
+            {$addToSet:{friends: newFriend._id}},
+            { new: true }
+        )
+
+
+        if(friendAdded){
+            const addedBack = await User.findOneAndUpdate(
+                {_id: newFriend._id},
+                {$addToSet: {friends: user._id}},
+                {new: true}
+            )
+            
+            res.status(200).json('you are now friends')
+        }
+        else{
+            res.status(404).json('no user to add with provided userId')
+        }
+
+    }
+    catch(err){}
+}
+
+
+module.exports = {getUser, postUser, getByUser, deleteByUser, addFriends}

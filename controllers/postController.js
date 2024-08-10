@@ -24,7 +24,7 @@ async function createPost(req, res) {
             { _id: req.body.userId },
             { $addToSet: { posts: post._id } },
             { new: true }
-            )
+        )
 }
     catch (err) {
     console.log(err)
@@ -50,7 +50,8 @@ async function deletePost(req,res) {
         
         const updateUser = await User.findByIdAndUpdate(
             {_id: deletedPost.userId},
-            {$pull : {post: deletedPost._id} }
+            {$pull : {posts: req.params.postId} },
+            {new: true}
         )
 
         if(deletedPost && updateUser){
